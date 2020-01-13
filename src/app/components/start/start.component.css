@@ -1,0 +1,25 @@
+body {
+    background-color: #dadada;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: grayscale;
+}
+body > .ui.grid {
+    height: 100%;
+}
+.column {
+    max-width: 450px;
+}
+
+.raised.card {
+    margin-top: 4em;
+    width: 350px;
+}
+
+.sub.header {
+    margin-top: 0 !important;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
