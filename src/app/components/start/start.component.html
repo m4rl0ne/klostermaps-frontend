@@ -11,7 +11,7 @@
           <div class="ui label">
             Start
           </div>
-          <input type="text" placeholder="Raumnummer">
+          <input type="text" placeholder="Raumnummer" required [(ngModel)]="model.start" name="start">
         </div>
       </div>
 
@@ -20,12 +20,12 @@
           <div class="ui label">
             Ziel
           </div>
-          <input type="text" placeholder="Raumnummer">
-        </div>
+          <input type="text" placeholder="Raumnummer" required [(ngModel)]="model.destination" name="destination">
+        </div> 
       </div>
 
       <div class="field">
-        <button class="fluid ui blue button">Start <i class="arrow right icon"></i></button>
+        <button class="fluid ui blue button" (click)="startNavigation()">Start <i class="arrow right icon"></i></button>
       </div>
     </form> 
 

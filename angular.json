@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "semantic/dist/semantic.min.css"
             ],
             "scripts": []
@@ -124,5 +124,10 @@
       }
     }
   },
-  "defaultProject": "klostermaps"
+  "defaultProject": "klostermaps",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

@@ -5,7 +5,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 
 const routes: Routes = [
   { path: 'start', component: StartComponent },
-  { path: 'navigation', component: NavigationComponent },
+  { path: 'navigation/:start/:destination', component: NavigationComponent },
   { path: '', redirectTo: 'start', pathMatch: 'full' }
 ];
 
