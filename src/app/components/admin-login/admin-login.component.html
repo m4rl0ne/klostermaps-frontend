@@ -1,3 +1,54 @@
-<p>
-  admin-login works!
-</p>
+<div class="ui main container">
+
+  <div class="ui container">
+    <div class="ui two column centered grid">
+      <div class="column">
+        <div class="ui segment">
+          <h1 class="ui dividing header">
+            <i class="user secret icon"></i>
+            <div class="content">
+              Admin Login
+              <div class="sub header">Ausversehen hier? <a href="#">Zurück</a></div>
+            </div>
+          </h1>
+
+          <form class="ui form" [class.error]="!f.form.valid || error" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="field" *ngIf="error">
+              <div class="ui error message">
+                <div>Fehler beim Login. Bitte Nutzername und Passwort überprüfen.</div>
+              </div>
+            </div>
+            
+            <div class="field" [class.error]="f.submitted && user.invalid">
+              <div class="ui fluid left icon input">
+                <input type="text" placeholder="Nutzername" name="user" [(ngModel)]="model.user" #user="ngModel" [ngClass]="{ 'is-invalid': f.submitted && user.invalid }" required>
+                <i class="user icon"></i>
+              </div>
+              <div *ngIf="f.submitted && user.invalid" class="ui error message">
+                <div *ngIf="user.errors.required">Bitte Nutzername eingeben</div>
+              </div>
+            </div>
+
+            <div class="field" [class.error]="f.submitted && password.invalid">
+              <div class="ui fluid left icon input">
+                <input type="password" placeholder="Passwort" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
+                <i class="lock icon"></i>
+              </div>
+              <div *ngIf="f.submitted && password.invalid" class="ui error message">
+                <div *ngIf="password.errors.required">Bitte Passwort eingeben</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <button class="ui fluid blue submit button">Login <i class="sign-in icon"></i></button>
+            </div>
+          </form>
+
+          <div class="ui inverted dimmer" [class.active]="loading">
+            <div class="ui loader"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

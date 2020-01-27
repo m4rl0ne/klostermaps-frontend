@@ -1,3 +1,12 @@
-<p>
-  map works!
-</p>
+<h2 class="ui dividing header">Maps</h2>
+
+<div class="ui placeholder segment" *ngIf="maps == null">
+  <div class="ui icon header">
+    <i class="search icon"></i>
+    Es wurden noch keine Karten hinzugefügt
+  </div>
+  <div class="inline">
+    <div class="ui primary button">Karte hochladen</div>
+    <div class="ui button">Events ansehen</div>
+  </div>
+</div>

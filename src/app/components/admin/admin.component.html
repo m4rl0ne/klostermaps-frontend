@@ -1,1 +1,30 @@
-<router-outlet></router-outlet>
+<div class="ui inverted segment">
+    <div class="ui inverted secondary pointing menu">
+        <div class="ui container">
+        <a href="/" class="header item">
+            <img class="logo" src="assets/images/logo.png">
+            Klostermaps
+        </a>
+        <a href="/admin/overview" class="item" [class.active]="this.router.url == '/admin/overview'">Übersicht</a>
+        <a href="/admin/event" class="item" [class.active]="this.router.url == '/admin/event'">Events</a>
+        <a href="/admin/map" class="item" [class.active]="this.router.url == '/admin/map'">Maps</a>
+
+        </div>
+
+        <div class="right menu">
+            <a class="item" (click)="logout()">
+                <i class="logout icon"></i>Logout
+              </a>
+        </div>
+    </div>
+</div>
+
+<div class="ui main container">
+
+    <div class="ui container">
+        <div class="ui segment">
+            <router-outlet></router-outlet> 
+        </div>
+    </div>
+</div>
+

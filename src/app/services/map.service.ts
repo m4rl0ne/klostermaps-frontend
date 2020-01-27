@@ -3,15 +3,14 @@ import { HttpClient } from '@angular/common/http'
 import { HttpHeaders } from '@angular/common/http';
 import { ResponseContentType } from '@angular/http';
 import { Observable } from 'rxjs';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  baseUrl = "http://127.0.0.1:5000/api"
-
-  constructor(private http: HttpClient) { }
+  constructor(private baseService: BaseService, private http: HttpClient) { }
 
   getMap(): Observable<any> {
     const httpOptions = {
@@ -21,6 +20,6 @@ export class MapService {
       responseType: 'blob' as 'json',
     };
 
-    return this.http.get<any>(this.baseUrl + '/app/map', httpOptions);
+    return this.http.get<any>(this.baseService.baseUrl + '/app/map', httpOptions);
   }
 }

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapComponent implements OnInit {
 
+  maps: any;
+
   constructor() { }
 
   ngOnInit() {
