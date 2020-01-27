@@ -1,3 +1,65 @@
-<p>
-  map-create-or-update works!
-</p>
+<h2 class="ui dividing header" *ngIf="!mapId">Karte erstellen</h2>
+<h2 class="ui dividing header" *ngIf="mapId">Karte bearbeiten</h2>
+
+<div class="ui fluid steps">
+  <div class="active step">
+    <i class="pencil icon"></i>
+    <div class="content">
+      <div class="title">Allgemeines</div>
+      <div class="description">Attribute + Datei</div>
+    </div>
+  </div>
+  <div class="step">
+    <i class="map icon"></i>
+    <div class="content">
+      <div class="title">Marker</div>
+      <div class="description">Marker hinzufügen</div>
+    </div>
+  </div>
+  <div class="step">
+    <i class="plus icon"></i>
+    <div class="content">
+      <div class="title">Speichern</div>
+      <div class="description">Überprüfen und speichern</div>
+    </div>
+  </div>
+</div>
+
+<form class="ui form" [class.error]="!f.form.valid || error" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+  <h4 class="ui dividing header">Allgemein</h4>
+  <div class="field">
+    <div class="two fields">
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Name">
+      </div>
+      <div class="field">
+        <label>Event</label >
+          <div class="ui selection dropdown">
+            <input type="hidden" name="event">
+            <i class="dropdown icon"></i>
+            <div class="default text">Event</div>
+            <div class="menu">
+                <div class="item" data-value="1">350-Jahr-Feier</div>
+                <div class="item" data-value="0">Elternabend</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="ui dividing header">Datei</h4>
+  <div class="field">
+    <form action="/file-upload"
+      class="dropzone"
+      id="my-awesome-dropzone"></form>
+  </div>
+
+  <div class="field">
+    <button class="ui fluid blue submit button">Weiter <i class="angle right icon"></i></button>
+  </div>
+</form>
+
+<div class="ui inverted dimmer" [class.active]="loading">
+  <div class="ui loader"></div>
+</div>

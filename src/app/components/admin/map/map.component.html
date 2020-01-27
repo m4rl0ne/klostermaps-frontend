@@ -1,4 +1,4 @@
-<h2 class="ui dividing header">Maps</h2>
+<h2 class="ui dividing header">Karten</h2>
 
 <div class="ui placeholder segment" *ngIf="maps == null">
   <div class="ui icon header">
@@ -6,7 +6,36 @@
     Es wurden noch keine Karten hinzugefügt
   </div>
   <div class="inline">
-    <div class="ui primary button">Karte hochladen</div>
-    <div class="ui button">Events ansehen</div>
+    <button class="ui primary button" routerLink="/admin/map/createOrEdit" >Karte hochladen</button>
+    <button class="ui button" routerLink="/admin/event">Events ansehen</button>
   </div>
 </div>
+
+<table class="ui celled table" *ngIf="maps != null">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Event</th>
+      <th>Dateiname</th>
+      <th class="collapsing">Aktion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let map of maps">
+      <td data-label="Name">{{ map.name }}</td>
+      <td data-label="Age">350-Jahr-Feier</td>
+      <td data-label="Job">{{ map.image.fileName }}&nbsp;&nbsp;<i class="external alternate yellow icon"></i></td>
+      <td class="single line"><i class="copy green outline icon"></i><i class="edit outline blue icon"></i><i class="trash alternate outline red icon"></i></td>
+    </tr>
+  </tbody>
+  <tfoot class="full-width">
+    <tr>
+      <th>{{ maps.length }} Karten</th>
+      <th colspan="4">
+        <button class="ui right floated small primary labeled icon button" routerLink="/admin/map/createOrEdit">
+          <i class="plus icon"></i> Karte hochladen
+        </button>
+      </th>
+    </tr>
+  </tfoot>
+</table>
