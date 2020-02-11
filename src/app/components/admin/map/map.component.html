@@ -24,7 +24,7 @@
     <tr *ngFor="let map of maps">
       <td data-label="Name">{{ map.name }}</td>
       <td data-label="Age">350-Jahr-Feier</td>
-      <td data-label="Job">{{ map.image.fileName }}&nbsp;&nbsp;<i class="external alternate yellow icon"></i></td>
+      <td data-label="Job">{{ map.image.fileName }}&nbsp;&nbsp;<a href="{{ baseUrl + ':5000/api/maps/' + map.image.fileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
       <td class="single line"><i class="copy green outline icon"></i><i class="edit outline blue icon"></i><i class="trash alternate outline red icon"></i></td>
     </tr>
   </tbody>

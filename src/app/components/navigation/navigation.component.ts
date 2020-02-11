@@ -11,7 +11,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NavigationComponent implements OnInit {
 
   private map: any;
-  private blob: any;
 
   constructor(private mapService: MapService, private domSanitizer: DomSanitizer) { }
 
@@ -19,7 +18,7 @@ export class NavigationComponent implements OnInit {
 
     // TODO: get marker positions from backend 
 
-    this.mapService.getMap().subscribe(res => {
+    this.mapService.getMap("Test123").subscribe(res => {
       let unsafeImageUrl = URL.createObjectURL(res);
       let imageUrl = this.domSanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
 

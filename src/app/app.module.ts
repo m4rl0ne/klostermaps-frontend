@@ -16,6 +16,8 @@ import { MapComponent } from './components/admin/map/map.component';
 import { MapCreateOrUpdateComponent } from './components/admin/map/map-create-or-update/map-create-or-update.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { AuthGuardService } from './guards/auth-guard.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxDropzoneModule
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent]

@@ -1,22 +1,22 @@
-<h2 class="ui dividing header" *ngIf="!mapId">Karte erstellen</h2>
+<h2 class="ui dividing header" *ngIf="!mapId">Karte anlegen</h2>
 <h2 class="ui dividing header" *ngIf="mapId">Karte bearbeiten</h2>
 
 <div class="ui fluid steps">
-  <div class="active step">
+  <div class="step" [class.active]="step==1" [class.completed]="step > 1">
     <i class="pencil icon"></i>
     <div class="content">
       <div class="title">Allgemeines</div>
       <div class="description">Attribute + Datei</div>
     </div>
   </div>
-  <div class="step">
+  <div class="step" [class.active]="step==2" [class.completed]="step > 2">
     <i class="map icon"></i>
     <div class="content">
       <div class="title">Marker</div>
       <div class="description">Marker hinzufügen</div>
     </div>
   </div>
-  <div class="step">
+  <div class="step" [class.active]="step==3">
     <i class="plus icon"></i>
     <div class="content">
       <div class="title">Speichern</div>
@@ -25,38 +25,108 @@
   </div>
 </div>
 
-<form class="ui form" [class.error]="!f.form.valid || error" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+<form class="ui form" *ngIf="step == 1" [class.error]="!firstStep.form.valid || error" (ngSubmit)="firstStep.form.valid && onSubmit()" #firstStep="ngForm" novalidate>
   <h4 class="ui dividing header">Allgemein</h4>
+
+  <div class="field" [class.error]="firstStep.submitted && name.invalid">
+    <label>Name*</label>
+    <input type="text" name="name" placeholder="Name" [(ngModel)]="firstStepModel.name" #name="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && name.invalid }" required>
+
+    <div *ngIf="firstStep.submitted && name.invalid" class="ui error message">
+      <div *ngIf="name.errors.required">Bitte Namen eingeben</div>
+    </div>
+  </div>
+
+  <div class="field" [class.error]="firstStep.submitted && description.invalid">
+    <label>Beschreibung</label>
+    <textarea name="description" placeholder="Beschreibung" [(ngModel)]="firstStepModel.description" #description="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && description.invalid }" rows="5" class="ui textarea"></textarea>
+  </div>
+
+  <h4 class="ui dividing header">Datei*</h4>
   <div class="field">
-    <div class="two fields">
-      <div class="field">
-        <label>Name</label>
-        <input type="text" name="name" placeholder="Name">
+    <ngx-dropzone (change)="onSelect($event)">
+      <ngx-dropzone-label>Karte hochladen (.jpg, .png, .svg, .pdf)</ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+  </ngx-dropzone>
+  </div>
+
+  <input type="hidden"
+    name="mapFileName"
+    [(ngModel)]="firstStepModel.mapFileName"
+    #mapFileName="ngModel"
+    [ngClass]="{ 'is-invalid': firstStep.submitted && mapFileName.invalid }"
+    required>
+
+  <div class="field">
+    <button class="ui fluid blue submit button" [class.disabled]="!firstStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+  </div>
+
+  <div class="field">
+    <div class="ui divider"></div>
+    Die mit * gekennzeichneten Felder sind Pflichtfelder.
+  </div>
+</form>
+
+
+<form class="ui form" *ngIf="step == 2" [class.error]="!secondStep.form.valid || error" (ngSubmit)="secondStep.form.valid && onSubmit()" #secondStep="ngForm" novalidate>
+  <h4 class="ui dividing header">Marker setzen</h4>
+
+  <div class="field">
+    <div class="ui message">
+      <div class="header">
+        POIs auf Karte hinzufügen
       </div>
-      <div class="field">
-        <label>Event</label >
-          <div class="ui selection dropdown">
-            <input type="hidden" name="event">
-            <i class="dropdown icon"></i>
-            <div class="default text">Event</div>
-            <div class="menu">
-                <div class="item" data-value="1">350-Jahr-Feier</div>
-                <div class="item" data-value="0">Elternabend</div>
-            </div>
-        </div>
+      <ul class="list">
+        <li>Mit Markern Räume und Treppenhäuser markieren. Einen Marker anklicken um zwischen Raum/Treppenhaus umzuschalten.</li>
+        <li>Mit der Polylinie die Gänge einzeichnen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="field">
+    <!-- Leaflet map container-->
+    <div class="map-container">
+      <div class="map-frame">
+        <div id="map"></div>
       </div>
     </div>
   </div>
 
-  <h4 class="ui dividing header">Datei</h4>
   <div class="field">
-    <form action="/file-upload"
-      class="dropzone"
-      id="my-awesome-dropzone"></form>
+    <div class="ui fluid buttons">
+      <button class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button class="ui blue button" [class.disabled]="!secondStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+    </div>
   </div>
 
   <div class="field">
-    <button class="ui fluid blue submit button">Weiter <i class="angle right icon"></i></button>
+    <div class="ui divider"></div>
+    Die mit * gekennzeichneten Felder sind Pflichtfelder.
+  </div>
+</form>
+
+<form class="ui form" *ngIf="step == 3" [class.error]="!thirdStep.form.valid || error" (ngSubmit)="thirdStep.form.valid && onSubmit()" #thirdStep="ngForm" novalidate>
+  <h4 class="ui dividing header">Überprüfen</h4>
+
+  <div class="field">
+    <div class="ui list">
+      <div class="item">Name: {{ firstStepModel.name }}</div>
+      <div class="item">Beschreibung: {{ firstStepModel.description }}</div>
+    </div>
+    <div class="ui divider"></div>
+    <div class="ui list">
+      <div class="item">Räume: {{ markers.length }}</div>
+      <div class="item">Flure: {{ polylines.length }}</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="ui fluid buttons">
+      <button class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button class="ui green button">Speichern <i class="angle right icon"></i></button>
+    </div>
   </div>
 </form>
 

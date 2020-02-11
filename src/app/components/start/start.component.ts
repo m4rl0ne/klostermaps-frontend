@@ -13,13 +13,14 @@ export class StartComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.model.start = "Haupteingang"
   }
 
   startNavigation(): void {
     // console.log(JSON.stringify(this.model))
     // send model.start and model.destination to the backend
 
-    
+
 
     // navigate to navigation
     this.router.navigate(['/navigation/' + this.model.start + '/' + this.model.destination])
