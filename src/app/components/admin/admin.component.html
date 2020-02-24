@@ -1,35 +1,74 @@
 <div class="ui inverted segment">
-    <div class="ui inverted secondary pointing menu">
-        <div class="ui container">
-        <a href="/" class="header item">
-            <!-- <img class="logo" src="assets/images/logo.png"> -->
-            <i class="map icon"></i>
-            Klostermaps
-        </a>
-        <a href="/admin/overview" class="item" [class.active]="this.router.url == '/admin/overview'">Übersicht</a>
-        <a href="/admin/event" class="item" [class.active]="this.router.url == '/admin/event'">Events</a>
-        <a href="/admin/map" class="item" [class.active]="this.router.url == '/admin/map' || this.router.url == '/admin/map/createOrEdit'">Maps</a>
+  <div class="ui inverted secondary pointing menu">
+    <div class="ui container">
+      <a href="/" class="header item">
+        <!-- <img class="logo" src="assets/images/logo.png"> -->
+        <i class="map icon"></i>
+        Klostermaps
+      </a>
+      <a href="/admin/overview" class="item" 
+      [class.active]="this.router.url == '/admin/overview'">Übersicht</a>
+      <a href="/admin/event" class="item" 
+        [class.active]="this.router.url == '/admin/event' || this.router.url == '/admin/event/createOrEdit'">Events & POIs</a>
+      <a href="/admin/map" class="item"
+        [class.active]="this.router.url == '/admin/map' || this.router.url == '/admin/map/createOrEdit'">Karten</a>
 
-        </div>
-
-        <div class="right menu">
-            <a class="item" (click)="logout()">
-                <i class="logout icon"></i>Logout
-              </a>
-        </div>
     </div>
+
+    <div class="right menu">
+      <div class="ui dropdown item">
+        <b><i class="user icon"></i>Konto</b>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <a class="item"><i class="lock icon"></i>Anmeldung & Sicherheit</a>
+          <a class="item"><i class="pencil icon"></i>Persönliche Daten</a>
+          <div class="divider"></div>
+          <a class="item"><i class="users icon"></i>Nutzerübersicht</a>
+          <a class="item"><i class="flag icon"></i>Berechtigungen</a>
+        </div>
+      </div>
+
+      <a class="item" (click)="logout()">
+        <b><i class="logout icon"></i>Logout</b>
+      </a>
+    </div>
+  </div>
 </div>
 
 <div class="ui main container">
 
-    <div class="ui container">
+  <div class="ui container">
+    <div class="ui segment">
+      <router-outlet></router-outlet>
+
+      <div class="ui left rail large screen computer only">
         <div class="ui segment">
-            <router-outlet></router-outlet> 
+          <a class="ui blue ribbon label">Zusammenfassung</a>
+          <div class="ui divider"></div>
+    
+          <div class="ui bulleted list">
+            <div class="item">Aktives Event: <b>350-Jahr-Feier</b></div>
+            <div class="item">Aktive Pläne: <b>4</b></div>
+            <div class="item">Anzahl POIs: <b>15</b></div>
+          </div>
         </div>
+      </div>
+      <div class="ui right rail large screen computer only">
+        <div class="ui segment">
+          <a class="ui blue right ribbon label">Schnellaktionen</a>
+          <div class="ui divider"></div>
+    
+          <button class="ui fluid yellow button">Event ändern</button>
+          <br>
+          <button class="ui fluid yellow button">POI hinzufügen</button>
+          <br>
+          <button class="ui fluid yellow button">Karte hochladen</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="ui dimmer">
-        <div class="ui text loader">Loading</div>
-    </div>
+  <div class="ui dimmer">
+    <div class="ui text loader">Loading</div>
+  </div>
 </div>
-

@@ -12,6 +12,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AuthGuardService } from './guards/auth-guard.service';
 
 const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'start' },
+
   { path: 'start', component: StartComponent },
 
   { path: 'navigation/:start/:destination', component: NavigationComponent },
