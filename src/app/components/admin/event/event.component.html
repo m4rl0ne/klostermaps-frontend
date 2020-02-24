@@ -1,3 +1,11 @@
-<p>
-  event works!
-</p>
+<h2 class="ui dividing header">Events</h2>
+
+<div class="ui placeholder segment" *ngIf="events == null">
+  <div class="ui icon header">
+    <i class="search icon"></i>
+    Es wurden noch keine Events angelegt
+  </div>
+  <div class="inline">
+    <button class="ui primary button" routerLink="/admin/event/createOrEdit" >Event erstellen</button>
+  </div>
+</div>

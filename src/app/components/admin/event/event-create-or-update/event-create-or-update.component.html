@@ -1,3 +1,100 @@
-<p>
-  event-create-or-update works!
-</p>
+<h2 class="ui dividing header" *ngIf="!eventId">Event anlegen</h2>
+<h2 class="ui dividing header" *ngIf="eventId">Event bearbeiten</h2>
+
+<div class="ui fluid steps">
+  <div class="step" [class.active]="step==1" [class.completed]="step > 1">
+    <i class="pencil icon"></i>
+    <div class="content">
+      <div class="title">Allgemeines</div>
+      <div class="description">Attribute + Datei</div>
+    </div>
+  </div>
+  <div class="step" [class.active]="step==2" [class.completed]="step > 2">
+    <i class="map icon"></i>
+    <div class="content">
+      <div class="title">POIs</div>
+      <div class="description">POIs definieren</div>
+    </div>
+  </div>
+  <div class="step" [class.active]="step==3">
+    <i class="plus icon"></i>
+    <div class="content">
+      <div class="title">Speichern</div>
+      <div class="description">Überprüfen und speichern</div>
+    </div>
+  </div>
+</div>
+
+<form class="ui form" [hidden]="step != 1" [class.error]="!firstStep.form.valid || error" (ngSubmit)="firstStep.form.valid && onSubmit()" #firstStep="ngForm" novalidate>
+  <h4 class="ui dividing header">Allgemein</h4>
+
+  <div class="field" [class.error]="firstStep.submitted && name.invalid">
+    <label>Name*</label>
+    <input type="text" name="name" placeholder="Name" [(ngModel)]="firstStepModel.name" #name="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && name.invalid }" required>
+
+    <div *ngIf="firstStep.submitted && name.invalid" class="ui error message">
+      <div *ngIf="name.errors.required">Bitte Namen eingeben</div>
+    </div>
+  </div>
+
+  <div class="field" [class.error]="firstStep.submitted && description.invalid">
+    <label>Beschreibung</label>
+    <textarea name="description" placeholder="Beschreibung" [(ngModel)]="firstStepModel.description" #description="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && description.invalid }" rows="5" class="ui textarea"></textarea>
+  </div>
+
+  <div class="field">
+    <button type="button" class="ui fluid blue submit button" [class.disabled]="!firstStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+  </div>
+
+  <div class="field">
+    <div class="ui divider"></div>
+    Die mit * gekennzeichneten Felder sind Pflichtfelder.
+  </div>
+</form>
+
+<form class="ui form" [hidden]="step != 2" [class.error]="!secondStep.form.valid || error" (ngSubmit)="secondStep.form.valid && onSubmit()" #secondStep="ngForm" novalidate>
+  <h4 class="ui dividing header">POIs definieren</h4>
+
+  <div class="field">
+    <div class="ui message">
+      <div class="header">
+        POIs auf Karte hinzufügen
+      </div>
+      <ul class="list">
+        <li>Positionen auf der Karte benennen (POI)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ui fluid search selection dropdown">
+    <input type="hidden" name="map">
+    <i class="dropdown icon"></i>
+    <div class="default text">Grundriss auswählen</div>
+    <div class="menu">
+      <div class="item" *ngFor="let map of maps"><i class="map icon"></i>{{ map.name }}</div>
+    </div>
+  </div>
+
+  <div class="ui divider"></div>
+
+  <div class="field">
+    <!-- Leaflet map container-->
+    <div class="map-container">
+      <div class="map-frame">
+        <div id="map"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="ui fluid buttons">
+      <button type="button" class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button type="button" class="ui blue button" [class.disabled]="!secondStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="ui divider"></div>
+    Die mit * gekennzeichneten Felder sind Pflichtfelder.
+  </div>
+</form>

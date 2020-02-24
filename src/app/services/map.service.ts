@@ -11,6 +11,12 @@ import { AuthService } from './auth.service';
 })
 export class MapService {
 
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken(),
+    })
+  };
+
   constructor(private baseService: BaseService, private authService: AuthService, private httpClient: HttpClient) { }
 
   getAllMaps(): Observable<Map[]> {
@@ -30,15 +36,21 @@ export class MapService {
   }
 
   uploadMap(files): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.authService.getToken(),
-      })
-    };
-
     let formData = new FormData();
     formData.append('mapImage', files[0], files[0].name);
 
-    return this.httpClient.post<any>(this.baseService.baseUrl + '/map/upload', formData, httpOptions);
+    return this.httpClient.post<any>(this.baseService.baseUrl + '/map/upload', formData, this.httpOptions);
+  }
+
+  nameExists(name: string): Observable<any> {
+    return this.httpClient.post<any>(this.baseService.baseUrl + '/map/name/' + encodeURIComponent(name) + '/exists', null, this.httpOptions);
+  }
+
+  createOrEditMap(mapCreateOrEditModel: any): Observable<any> {
+    return this.httpClient.post<any>(this.baseService.baseUrl + '/map/', mapCreateOrEditModel, this.httpOptions);
+  }
+
+  deleteMap(mapId: number): Observable<any> {
+    return this.httpClient.delete<any>(this.baseService.baseUrl + '/map/' + mapId, this.httpOptions);
   }
 }

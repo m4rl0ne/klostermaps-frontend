@@ -18,7 +18,6 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AuthGuardService } from './guards/auth-guard.service';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
-
 @NgModule({
   declarations: [
     AppComponent,
