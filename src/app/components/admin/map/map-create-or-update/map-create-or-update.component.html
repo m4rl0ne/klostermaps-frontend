@@ -25,14 +25,20 @@
   </div>
 </div>
 
-<form class="ui form" *ngIf="step == 1" [class.error]="!firstStep.form.valid || error" (ngSubmit)="firstStep.form.valid && onSubmit()" #firstStep="ngForm" novalidate>
+<form class="ui form" [hidden]="step != 1" [class.error]="!firstStep.form.valid || error" (ngSubmit)="firstStep.form.valid && onSubmit()" #firstStep="ngForm" novalidate>
   <h4 class="ui dividing header">Allgemein</h4>
 
-  <div class="field" [class.error]="firstStep.submitted && name.invalid">
+  <div class="field" [class.error]="!name.pristine && name.invalid">
     <label>Name*</label>
-    <input type="text" name="name" placeholder="Name" [(ngModel)]="firstStepModel.name" #name="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && name.invalid }" required>
+    <div class="ui icon input">
+      <input type="text" id="nameInput" name="name" placeholder="Name" [(ngModel)]="firstStepModel.name" #name="ngModel" [ngClass]="{ 'is-invalid': name.invalid }" (focusout)="checkNameExists()" required>
+      
+      <i class="red close icon" *ngIf="name.invalid && nameIsValid === false"></i>
+      <i class="green check icon" *ngIf="nameIsValid === true"></i>
+    </div>
 
-    <div *ngIf="firstStep.submitted && name.invalid" class="ui error message">
+    <div *ngIf="!name.pristine && name.invalid" class="ui error message">
+      <div *ngIf="name.errors.exists">Dieser Name ist schon vergeben.</div>
       <div *ngIf="name.errors.required">Bitte Namen eingeben</div>
     </div>
   </div>
@@ -60,7 +66,7 @@
     required>
 
   <div class="field">
-    <button class="ui fluid blue submit button" [class.disabled]="!firstStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+    <button type="button" class="ui fluid blue submit button" [class.disabled]="!firstStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
   </div>
 
   <div class="field">
@@ -70,7 +76,7 @@
 </form>
 
 
-<form class="ui form" *ngIf="step == 2" [class.error]="!secondStep.form.valid || error" (ngSubmit)="secondStep.form.valid && onSubmit()" #secondStep="ngForm" novalidate>
+<form class="ui form" [hidden]="step != 2" [class.error]="!secondStep.form.valid || error" (ngSubmit)="secondStep.form.valid && onSubmit()" #secondStep="ngForm" novalidate>
   <h4 class="ui dividing header">Marker setzen</h4>
 
   <div class="field">
@@ -96,8 +102,8 @@
 
   <div class="field">
     <div class="ui fluid buttons">
-      <button class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
-      <button class="ui blue button" [class.disabled]="!secondStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
+      <button type="button" class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button type="button" class="ui blue button" [class.disabled]="!secondStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
     </div>
   </div>
 
@@ -107,7 +113,7 @@
   </div>
 </form>
 
-<form class="ui form" *ngIf="step == 3" [class.error]="!thirdStep.form.valid || error" (ngSubmit)="thirdStep.form.valid && onSubmit()" #thirdStep="ngForm" novalidate>
+<form class="ui form" [hidden]="step != 3" [class.error]="!thirdStep.form.valid || error" (ngSubmit)="thirdStep.form.valid && onSubmit()" #thirdStep="ngForm" novalidate>
   <h4 class="ui dividing header">Überprüfen</h4>
 
   <div class="field">
@@ -124,12 +130,8 @@
 
   <div class="field">
     <div class="ui fluid buttons">
-      <button class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
-      <button class="ui green button">Speichern <i class="angle right icon"></i></button>
+      <button type="button" class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button type="button" class="ui green button" (click)="createOrEditMap()">Speichern <i class="angle right icon"></i></button>
     </div>
   </div>
 </form>
-
-<div class="ui inverted dimmer" [class.active]="loading">
-  <div class="ui loader"></div>
-</div>

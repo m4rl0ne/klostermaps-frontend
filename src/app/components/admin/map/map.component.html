@@ -1,6 +1,6 @@
 <h2 class="ui dividing header">Karten</h2>
 
-<div class="ui placeholder segment" *ngIf="maps == null">
+<div class="ui placeholder segment" *ngIf="maps == null || numOfMaps == 0">
   <div class="ui icon header">
     <i class="search icon"></i>
     Es wurden noch keine Karten hinzugefügt
@@ -11,26 +11,24 @@
   </div>
 </div>
 
-<table class="ui celled table" *ngIf="maps != null">
+<table class="ui celled map table" *ngIf="maps != null && numOfMaps > 0">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Event</th>
       <th>Dateiname</th>
       <th class="collapsing">Aktion</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let map of maps">
+    <tr *ngFor="let map of maps" [attr.id]="map._id">
       <td data-label="Name">{{ map.name }}</td>
-      <td data-label="Age">350-Jahr-Feier</td>
-      <td data-label="Job">{{ map.image.fileName }}&nbsp;&nbsp;<a href="{{ baseUrl + ':5000/api/maps/' + map.image.fileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
-      <td class="single line"><i class="copy green outline icon"></i><i class="edit outline blue icon"></i><i class="trash alternate outline red icon"></i></td>
+      <td data-label="Job">{{ map.mapFileName }}&nbsp;&nbsp;<a href="{{ baseUrl + ':5000/api/maps/' + map.mapFileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
+      <td class="single line"><i class="copy green outline icon" (click)="showComingSoonModal()"></i><i class="edit outline blue icon" (click)="showComingSoonModal()"></i><i class="trash alternate outline red icon" (click)="showDeleteConfirmationModal(map._id)" data-id="{{ map._id }}"></i></td>
     </tr>
   </tbody>
   <tfoot class="full-width">
     <tr>
-      <th>{{ maps.length }} Karten</th>
+      <th>{{ numOfMaps }} Karten</th>
       <th colspan="4">
         <button class="ui right floated small primary labeled icon button" routerLink="/admin/map/createOrEdit">
           <i class="plus icon"></i> Karte hochladen
@@ -39,3 +37,39 @@
     </tr>
   </tfoot>
 </table>
+
+<div class="ui basic deleteConfirmation modal">
+  <div class="ui icon header">
+    <i class="trash alternate outline icon"></i>
+    Karte löschen
+  </div>
+  <div class="content">
+    <p>Sind Sie sicher, dass Sie die Karte mit allen zugehörigen Markierungen und POIs löschen möchten?</p>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      Nein
+    </div>
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Ja
+    </div>
+  </div>
+</div>
+
+<div class="ui basic comingSoon modal">
+  <div class="ui icon header">
+    <i class="terminal icon"></i>
+    Coming soon
+  </div>
+  <div class="content">
+    <p>Diese Funktion ist bald in einem der nächsten Releases verfügbar.</p>
+  </div>
+  <div class="actions">
+    <div class="ui cancel button">
+      <i class="remove icon"></i>
+      Schließen
+    </div>
+  </div>
+</div>
