@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from 'src/app/services/event.service';
 
 declare var $: any;
 
@@ -11,10 +12,16 @@ declare var $: any;
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService) { }
+  activeEvent: any;
+
+  constructor(private router: Router, private authService: AuthService, private eventService: EventService) { }
 
   ngOnInit() {
     $(".dropdown").dropdown();
+
+    this.eventService.getActiveEvent().subscribe(event => {
+      this.activeEvent = event["event"][0];
+    })
   }
 
   logout() {

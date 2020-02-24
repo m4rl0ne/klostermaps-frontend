@@ -9,3 +9,7 @@ height: 600px;
 .ui.fluid.selection.dropdown {
     z-index: 999999;
 }
+
+.leaflet-popup-content {
+    width: 100px !important;
+}

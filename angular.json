@@ -30,7 +30,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "semantic/dist/semantic.min.js",
-              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet/dist/leaflet.js"
             ]
           },
           "configurations": {

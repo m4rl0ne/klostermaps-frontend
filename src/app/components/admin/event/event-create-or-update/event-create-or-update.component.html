@@ -6,7 +6,7 @@
     <i class="pencil icon"></i>
     <div class="content">
       <div class="title">Allgemeines</div>
-      <div class="description">Attribute + Datei</div>
+      <div class="description">Attribute</div>
     </div>
   </div>
   <div class="step" [class.active]="step==2" [class.completed]="step > 2">
@@ -42,6 +42,24 @@
     <textarea name="description" placeholder="Beschreibung" [(ngModel)]="firstStepModel.description" #description="ngModel" [ngClass]="{ 'is-invalid': firstStep.submitted && description.invalid }" rows="5" class="ui textarea"></textarea>
   </div>
 
+  <!-- TODO: use other event as template, show only if at least one event is created -->
+  <ng-container *ngIf="false">
+    <h4 class="ui dividing header">Vorlage</h4>
+
+    <div class="field">
+      <label>Anderes Event als Vorlage verwenden</label>
+      <div class="ui fluid selection dropdown">
+        <input type="hidden" name="eventTemplate">
+        <i class="dropdown icon"></i>
+        <div class="default text">Vorlage</div>
+        <div class="menu">
+          <div class="item" data-value="1">350-Jahr-Feier (15 POIs)</div>
+          <div class="item" data-value="0">Musischer Abend (3 POIs)</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
   <div class="field">
     <button type="button" class="ui fluid blue submit button" [class.disabled]="!firstStep.form.valid" (click)="nextStep()">Weiter <i class="angle right icon"></i></button>
   </div>
@@ -52,16 +70,19 @@
   </div>
 </form>
 
+
 <form class="ui form" [hidden]="step != 2" [class.error]="!secondStep.form.valid || error" (ngSubmit)="secondStep.form.valid && onSubmit()" #secondStep="ngForm" novalidate>
   <h4 class="ui dividing header">POIs definieren</h4>
 
   <div class="field">
     <div class="ui message">
+      <i class="close icon"></i>
       <div class="header">
         POIs auf Karte hinzufügen
       </div>
       <ul class="list">
-        <li>Positionen auf der Karte benennen (POI)</li>
+        <li>Karte aus dem Dropdown auswählen</li>
+        <li>Marker anklicken und Name in das Feld eingeben, zum Speichern in die Karte oder auf das kleine Kreuz klicken</li>
       </ul>
     </div>
   </div>
@@ -71,7 +92,7 @@
     <i class="dropdown icon"></i>
     <div class="default text">Grundriss auswählen</div>
     <div class="menu">
-      <div class="item" *ngFor="let map of maps"><i class="map icon"></i>{{ map.name }}</div>
+      <div class="item" *ngFor="let map of maps" [attr.data-value]="map.mapFileName"><i class="map icon"></i>{{ map.name }}</div>
     </div>
   </div>
 
@@ -84,6 +105,8 @@
         <div id="map"></div>
       </div>
     </div>
+
+    <input type="hidden" name="keywords" [(ngModel)]="secondStepModel.keywords" #keywords="ngModel" required>
   </div>
 
   <div class="field">
@@ -98,3 +121,34 @@
     Die mit * gekennzeichneten Felder sind Pflichtfelder.
   </div>
 </form>
+
+<div *ngIf="step == 3">
+  <h4 class="ui dividing header">Überprüfen</h4>
+
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>Eventname</th>
+        <th>POI Bezeichnung</th>
+        <th>Karte</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- this is some strange bug... -->
+      <tr *ngFor="let keyword of JSON.parse(secondStepModel.keywords)">
+        <td>{{ firstStepModel.name }}</td>
+        <td>{{ keyword.key }}</td>
+        <td><i class="map icon"></i>{{ getMapForId(keyword.map) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="field">
+    <div class="ui fluid buttons">
+      <button type="button" class="ui button" (click)="previousStep()"><i class="angle left icon"></i> Zurück</button>
+      <button type="button" class="ui green button" (click)="createOrEditEvent()">Speichern <i class="angle right icon"></i></button>
+    </div>
+  </div>
+
+</div>

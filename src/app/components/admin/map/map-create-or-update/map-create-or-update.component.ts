@@ -111,37 +111,37 @@ export class MapCreateOrUpdateComponent implements OnInit {
   this.map.addControl(drawControl);
 
   this.map.on(L.Draw.Event.CREATED, function (e) {
-    var type = e.layerType, layer = e.layer;
+    var roomType = e.layerType, layer = e.layer;
 
-    if (type === 'marker') {
+    if (roomType === 'marker') {
       let markerId = that.markers.length;
       layer.bindPopup('<div class="ui form"> <div class="grouped fields"><label>Typ</label>'+
-        '<div class="field"><div class="ui radio checkbox" data-type="room"><input type="radio" name="marker" checked="checked"><label>Raum</label></div></div>'+
-        '<div class="field"><div class="ui radio checkbox" data-type="stairway"><input type="radio" name="marker"><label>Treppenhaus</label></div></div></div></div>');
-      that.markers.push({id: markerId, position: layer.getLatLng(), type: 'room'});
+        '<div class="field"><div class="ui radio checkbox" data-roomType="room"><input type="radio" name="marker" checked="checked"><label>Raum</label></div></div>'+
+        '<div class="field"><div class="ui radio checkbox" data-roomType="stairway"><input type="radio" name="marker"><label>Treppenhaus</label></div></div></div></div>');
+      that.markers.push({id: markerId, position: layer.getLatLng(), roomType: 'room'});
 
       layer.on("popupopen", (e) => {
-        if(that.markers[markerId].type == "room") {
+        if(that.markers[markerId].roomType == "room") {
           $(".radio.checkbox:eq(0)").checkbox("check")
 
-        }else if(that.markers[markerId].type == "stairway"){
+        }else if(that.markers[markerId].roomType == "stairway"){
           $(".radio.checkbox:eq(1)").checkbox("check")
         }
 
         //add change handler for checkbox
         $(".radio.checkbox").checkbox({
-          onChecked: () => {
-            that.markers[markerId].type = $(".grouped.fields .checked")[0].dataset.type;
+          onChecked: (e) => {
+            that.markers[markerId].roomType = $(".grouped.fields .checked")[0].dataset.roomtype;
           }
         })
       })
-    }else if(type === 'polyline') {
+    }else if(roomType === 'polyline') {
       that.polylines.push({id: '', nodes: layer.getLatLngs()});
     }
 
     editableLayers.addLayer(layer);
-    if(type === 'marker') that.markers[that.markers.length - 1].id = layer._leaflet_id;
-    if(type === 'polyline') that.polylines[that.polylines.length -1].id = layer._leaflet_id;
+    if(roomType === 'marker') that.markers[that.markers.length - 1].id = layer._leaflet_id;
+    if(roomType === 'polyline') that.polylines[that.polylines.length -1].id = layer._leaflet_id;
   });
 
   this.map.on(L.Draw.Event.DELETED, function(e) {

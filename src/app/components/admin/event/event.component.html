@@ -1,11 +1,79 @@
 <h2 class="ui dividing header">Events: Übersicht</h2>
 
-<div class="ui placeholder segment" *ngIf="events == null">
+<div class="ui placeholder segment" *ngIf="events && events.length == 0">
   <div class="ui icon header">
     <i class="search icon"></i>
     Es wurden noch keine Events angelegt
   </div>
   <div class="inline">
     <button class="ui primary button" routerLink="/admin/event/createOrEdit" >Event erstellen</button>
+  </div>
+</div>
+
+<table class="ui celled definition table" *ngIf="events && events.length != 0">
+  <thead>
+    <th></th>
+    <th>Name</th>
+    <th>Aktiv</th>
+    <th class="collapsing">Aktion</th>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let event of events" [attr.id]="event._id">
+      <td class="collapsing">
+        <div class="ui fitted slider checkbox" [attr.data-eventId]="event._id">
+          <input type="checkbox" [checked]="event.active" [attr.data-eventId]="event._id"> <label></label>
+        </div>
+      </td>
+      <td>{{ event.name }}</td>
+      <td class="eventActive">{{ event.active == true ? "Ja" : "Nein"}}</td>
+      <td class="single line"><i class="copy green outline icon" (click)="showComingSoonModal()"></i><i class="edit outline blue icon" (click)="showComingSoonModal()"></i><i class="trash alternate outline red icon" (click)="showDeleteConfirmationModal(event._id)" data-id="{{ event._id }}"></i></td>
+    </tr>
+  </tbody>
+
+  <tfoot class="full-width">
+    <tr>
+      <th colspan="4">
+        <button class="ui right floated small primary labeled icon button" routerLink="/admin/event/createOrEdit">
+          <i class="plus icon"></i> Event anlegen
+        </button>
+      </th>
+    </tr>
+  </tfoot>
+</table>
+
+<div class="ui basic deleteConfirmation modal">
+  <div class="ui icon header">
+    <i class="trash alternate outline icon"></i>
+    Event löschen
+  </div>
+  <div class="content">
+    <p>Sind Sie sicher, dass Sie dieses Event mit allen zugehörigen POIs löschen möchten?</p>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      Nein
+    </div>
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Ja
+    </div>
+  </div>
+</div>
+
+<div class="ui basic comingSoon modal">
+  <div class="ui icon header">
+    <i class="terminal icon"></i>
+    Coming soon
+  </div>
+  <div class="content">
+    <p>Diese Funktion ist bald in einem der nächsten Releases verfügbar.</p>
+  </div>
+  <div class="actions">
+    <div class="ui cancel button">
+      <i class="remove icon"></i>
+      Schließen
+    </div>
   </div>
 </div>
