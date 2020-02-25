@@ -1,0 +1,3 @@
+<app-start *ngIf="!navigate" (gotDirections)="startNavigation($event)"></app-start>
+
+<app-navigation *ngIf="navigate" [directions]="directions"></app-navigation>

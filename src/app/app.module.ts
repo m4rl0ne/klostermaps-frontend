@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { SuiModule } from 'ng2-semantic-ui';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { StartComponent } from './components/start/start.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { StartComponent } from './components/main/start/start.component';
+import { NavigationComponent } from './components/main/navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminOverviewComponent } from './components/admin/admin-overview/admin-overview.component';
@@ -17,6 +17,7 @@ import { MapCreateOrUpdateComponent } from './components/admin/map/map-create-or
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +30,15 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     EventCreateOrUpdateComponent,
     MapComponent,
     MapCreateOrUpdateComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    MainComponent
   ],
   imports: [
     SuiModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     NgxDropzoneModule
   ],
