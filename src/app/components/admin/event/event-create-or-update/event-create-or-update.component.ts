@@ -3,6 +3,7 @@ import { MapService } from 'src/app/services/map.service';
 import { NgForm } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { Router } from '@angular/router';
+import { BaseService } from 'src/app/services/base.service';
 
 declare var $: any;
 declare var L: any;
@@ -38,7 +39,8 @@ export class EventCreateOrUpdateComponent implements OnInit {
   constructor(
     private mapService: MapService, 
     private eventService: EventService,
-    private router: Router) { 
+    private router: Router,
+    private baseService: BaseService) { 
     this.JSON = JSON;
   }
 
@@ -53,7 +55,7 @@ export class EventCreateOrUpdateComponent implements OnInit {
         }
 
         var bounds = [[0,0], [1000,1000]];
-        L.imageOverlay('http://localhost:5000/api/maps/' + mapFileName, bounds).addTo(this.leafletMap);
+        L.imageOverlay(this.baseService.baseUrl + '/maps/' + mapFileName, bounds).addTo(this.leafletMap);
         this.leafletMap.fitBounds(bounds);
 
         let redIcon = new L.Icon({

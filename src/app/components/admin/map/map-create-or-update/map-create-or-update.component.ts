@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import '../../../../../../node_modules/leaflet-draw/dist/leaflet.draw.js';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BaseService } from 'src/app/services/base.service.js';
 
 declare var $: any;
 declare var L: any;
@@ -36,7 +37,7 @@ export class MapCreateOrUpdateComponent implements OnInit {
 
   files: File[] = [];
 
-  constructor(private mapService: MapService, private router: Router, private mapsService: MapService) { }
+  constructor(private mapService: MapService, private router: Router, private mapsService: MapService, private baseService: BaseService) { }
 
   ngOnInit() {
   }
@@ -74,7 +75,7 @@ export class MapCreateOrUpdateComponent implements OnInit {
     });
 
     var bounds = [[0,0], [1000,1000]];
-    var image = L.imageOverlay('http://localhost:5000/api/maps/' + this.firstStepModel.mapFileName, bounds).addTo(this.map);
+    var image = L.imageOverlay(this.baseService.baseUrl + '/maps/' + this.firstStepModel.mapFileName, bounds).addTo(this.map);
 
     this.map.fitBounds(bounds);
 

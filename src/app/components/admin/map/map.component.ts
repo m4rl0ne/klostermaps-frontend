@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { Location } from '@angular/common';
+import { BaseService } from 'src/app/services/base.service';
 
 declare var $: any;
 
@@ -15,11 +16,11 @@ export class MapComponent implements OnInit {
   baseUrl: string;
   numOfMaps: number;
 
-  constructor(private mapService: MapService, private location: Location) { }
+  constructor(private mapService: MapService, private location: Location, private baseService: BaseService) { }
 
   ngOnInit() {
 
-    this.baseUrl = window.location.origin.split(":")[0] + ':' + window.location.origin.split(":")[1];
+    this.baseUrl = this.baseService.baseUrl;
 
     this.mapService.getAllMaps().subscribe(maps => {
       this.maps = maps["maps"];

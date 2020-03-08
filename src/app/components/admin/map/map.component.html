@@ -20,9 +20,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let map of maps" [attr.id]="map._id">
-      <td data-label="Name">{{ map.name }}</td>
-      <td data-label="Job">{{ map.mapFileName }}&nbsp;&nbsp;<a href="{{ baseUrl + ':5000/api/maps/' + map.mapFileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
+    <tr *ngFor="let map of maps" [attr.id]="map?._id">
+      <td data-label="Name">{{ map?.name }}</td>
+      <td data-label="Job">{{ map?.mapFileName }}&nbsp;&nbsp;<a href="{{ baseUrl + '/maps/' + map.mapFileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
       <td class="single line"><i class="copy green outline icon" (click)="showComingSoonModal()"></i><i class="edit outline blue icon" (click)="showComingSoonModal()"></i><i class="trash alternate outline red icon" (click)="showDeleteConfirmationModal(map._id)" data-id="{{ map._id }}"></i></td>
     </tr>
   </tbody>
