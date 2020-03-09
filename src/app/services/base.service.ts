@@ -7,8 +7,8 @@ import { AuthService } from './auth.service';
 })
 export class BaseService {
 
-  public baseUrl = "https://klostermaps.herokuapp.com/api"
-  // public baseUrl = "http://127.0.0.1:5000/api"
+  //public baseUrl = "https://klostermaps.herokuapp.com/api"
+  public baseUrl = "http://127.0.0.1:5000/api"
 
   constructor() { }
 }

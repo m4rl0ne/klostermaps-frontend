@@ -7,23 +7,23 @@
 
     <form class="ui form" [formGroup]="startForm" (submit)="startNavigation()">
       <div class="field">
-        <div class="ui labeled input">
-          <div class="ui label">
-            Start
+        <div class="ui search">
+          <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="Start (Raumnummer/Ort)" name="start" formControlName="start" #name>
+            <i class="search icon"></i>
           </div>
-          <input type="text" placeholder="Raumnummer/Ort" name="start" formControlName="start" #name>
-          <div *ngIf="name.touched && name.hasError('required')">Bitte ausfüllen</div>
+          <div class="results"></div>
         </div>
       </div>
 
       <div class="field">
-        <div class="ui labeled input">
-          <div class="ui label">
-            Ziel
+        <div class="ui search">
+          <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="Ziel (Raumnummer/Ort)" name="end" formControlName="end" #end>
+            <i class="search icon"></i>
           </div>
-          <input type="text" placeholder="Raumnummer/Ort" name="end" formControlName="end" #end>
-          <div *ngIf="end.touched && end.hasError('required')">Bitte ausfüllen</div>
-        </div> 
+          <div class="results"></div>
+        </div>
       </div>
 
       <div class="field">

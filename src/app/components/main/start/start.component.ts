@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Router} from "@angular/router"
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { StartService } from 'src/app/services/start.service';
 
 declare var $: any;
@@ -15,14 +15,27 @@ export class StartComponent implements OnInit {
   @Output() gotDirections = new EventEmitter();
   startForm: any;
 
+  keywords: any;
+
   constructor(private router: Router, private fb: FormBuilder, private startService: StartService) { 
+    this.keywords = [
+      { title: '205'},
+      { title: '311'},
+      { title: 'Biologie'},
+      { title: 'Aula'},
+      { title: 'Innenhof'},
+    ];
+
     this.startForm = this.fb.group({
-      start: ['Haupteingang', Validators.required],
+      start: ['Aula', Validators.required],
       end: ['', Validators.required]
     });
   }
 
-  ngOnInit() { 
+  ngOnInit() {
+    $(".ui.search").search({
+      source: this.keywords
+    });
   }
 
   startNavigation(): void {
