@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BaseService } from 'src/app/services/base.service';
 
 declare var $: any;
 declare var L: any;
@@ -14,7 +15,7 @@ export class NavigationComponent implements OnInit {
 
   leafletMap: any;
 
-  constructor() { 
+  constructor(private baseService: BaseService) { 
   }
 
   ngOnInit() {
@@ -28,8 +29,8 @@ export class NavigationComponent implements OnInit {
       maxZoom: 1
     });
 
-    var bounds = [[0,0], [1000,1000]];
-    L.imageOverlay('http://localhost:5000/api/maps/' + this.directions[0].mapFileName, bounds).addTo(this.leafletMap);
+    var bounds = [[0,0], [this.directions[0].dimensions.height,this.directions[0].dimensions.width]];
+    L.imageOverlay(this.baseService.baseUrl + '/maps/' + this.directions[0].mapFileName, bounds).addTo(this.leafletMap);
     this.leafletMap.fitBounds(bounds);
 
     /**

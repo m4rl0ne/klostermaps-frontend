@@ -15,17 +15,15 @@ export class StartComponent implements OnInit {
   @Output() gotDirections = new EventEmitter();
   startForm: any;
 
-  keywords: any;
+  keywords = [
+    { title: '205'},
+    { title: '311'},
+    { title: 'Biologie'},
+    { title: 'Aula'},
+    { title: 'Innenhof'},
+  ];
 
   constructor(private router: Router, private fb: FormBuilder, private startService: StartService) { 
-    this.keywords = [
-      { title: '205'},
-      { title: '311'},
-      { title: 'Biologie'},
-      { title: 'Aula'},
-      { title: 'Innenhof'},
-    ];
-
     this.startForm = this.fb.group({
       start: ['Aula', Validators.required],
       end: ['', Validators.required]
@@ -34,7 +32,12 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
     $(".ui.search").search({
-      source: this.keywords
+      source: this.keywords,
+      onSelect: (e) => {
+        this.startForm.patchValue({
+          end: e.title
+        });
+      }
     });
   }
 

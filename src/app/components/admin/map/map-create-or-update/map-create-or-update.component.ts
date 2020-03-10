@@ -36,6 +36,7 @@ export class MapCreateOrUpdateComponent implements OnInit {
   polylines: any = [];
 
   files: File[] = [];
+  imageDimensions: any = {};
 
   constructor(private mapService: MapService, private router: Router, private mapsService: MapService, private baseService: BaseService) { }
 
@@ -55,10 +56,13 @@ export class MapCreateOrUpdateComponent implements OnInit {
 
   onSelect(event) {
     this.files.push(...event.addedFiles);
-
+    
     this.mapService.uploadMap(this.files).subscribe(res => {
       this.firstStepModel.mapFileName = res.fileName;
       this.firstStepForm.controls["mapFileName"].markAsTouched();
+
+      this.imageDimensions.width = res.dimensions.width;
+      this.imageDimensions.height = res.dimensions.height;
     });
   }
 
@@ -74,7 +78,9 @@ export class MapCreateOrUpdateComponent implements OnInit {
       minZoom: -2
     });
 
-    var bounds = [[0,0], [1000,1000]];
+    console.log(this.imageDimensions);
+
+    var bounds = [[0,0], [this.imageDimensions.height,this.imageDimensions.width]];
     var image = L.imageOverlay(this.baseService.baseUrl + '/maps/' + this.firstStepModel.mapFileName, bounds).addTo(this.map);
 
     this.map.fitBounds(bounds);

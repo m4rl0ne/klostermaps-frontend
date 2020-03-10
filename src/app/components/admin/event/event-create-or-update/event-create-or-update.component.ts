@@ -54,7 +54,12 @@ export class EventCreateOrUpdateComponent implements OnInit {
           this.leafletMap.removeLayer(this.currentOverlay);
         }
 
-        var bounds = [[0,0], [1000,1000]];
+        let dimensions;
+        this.maps.forEach(map => {
+          if(map.mapFileName == mapFileName) dimensions = map.dimensions;
+        });
+        
+        var bounds = [[0,0], [dimensions.height,dimensions.width]];
         L.imageOverlay(this.baseService.baseUrl + '/maps/' + mapFileName, bounds).addTo(this.leafletMap);
         this.leafletMap.fitBounds(bounds);
 
