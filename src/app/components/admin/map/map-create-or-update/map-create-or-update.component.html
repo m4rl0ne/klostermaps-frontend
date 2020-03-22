@@ -111,6 +111,16 @@
     <div class="ui divider"></div>
     Die mit * gekennzeichneten Felder sind Pflichtfelder.
   </div>
+
+  <app-map-detail-modal *ngIf="showMapDetailModal" 
+    [mode]="mapDetailMode" 
+    [title]="mapDetailTitle" 
+    [header]="mapDetailHeader"
+    [maps]="maps"
+    [mapToCreate]="firstStepModel.name"
+    [origin]="originMarker"
+    (closed)="mapDetailClose($event)">
+  </app-map-detail-modal>
 </form>
 
 <form class="ui form" [hidden]="step != 3" [class.error]="!thirdStep.form.valid || error" (ngSubmit)="thirdStep.form.valid && onSubmit()" #thirdStep="ngForm" novalidate>

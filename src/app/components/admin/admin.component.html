@@ -35,13 +35,12 @@
   </div>
 </div>
 
-<div class="ui main container">
+<div class="main ui container">
+  <div class="ui segment">
+    <router-outlet></router-outlet>
 
-  <div class="ui container">
-    <div class="ui segment">
-      <router-outlet></router-outlet>
-
-      <div class="ui left rail large screen computer only">
+    <div class="ui container large screen only">
+      <div class="ui left rail">
         <div class="ui segment">
           <a class="ui blue ribbon label">Zusammenfassung</a>
           <div class="ui divider"></div>
@@ -51,7 +50,8 @@
           </div>
         </div>
       </div>
-      <div class="ui right rail large screen computer only">
+  
+      <div class="ui right rail">
         <div class="ui segment">
           <a class="ui blue right ribbon label">Schnellaktionen</a>
           <div class="ui divider"></div>

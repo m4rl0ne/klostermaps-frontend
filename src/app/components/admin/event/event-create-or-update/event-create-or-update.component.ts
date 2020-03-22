@@ -153,9 +153,10 @@ export class EventCreateOrUpdateComponent implements OnInit {
           if(marker.roomType == "stairway") {
             this.maps[mapIndex].markers.splice(markerIndex, 1);
           }
-        })
+        });
       });
 
+      // TODO: Check if obsolete?
       let result = 0;
       for(let map of this.maps) {
         result += map.markers.length;

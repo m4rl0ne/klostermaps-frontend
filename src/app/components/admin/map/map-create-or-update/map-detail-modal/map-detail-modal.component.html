@@ -1,0 +1,44 @@
+<div class="ui modal mapDetailModal">
+  <i class="close icon"></i>
+  <div class="header">
+    {{ title }}
+  </div>
+  <div class="content">
+    <div class="description">
+      <div class="ui header">{{ header }}</div>
+
+      <div class="ui message">
+        <ul class="list">
+          <li>Auf den Marker klicken, um die Richtung des Treppenhauses auszuwählen.</li>
+        </ul>
+      </div>
+
+      <div class="ui fluid search selection dropdown">
+        <input type="hidden" name="map">
+        <i class="dropdown icon"></i>
+        <div class="default text">Grundriss auswählen</div>
+        <div class="menu">
+          <div class="item" *ngFor="let map of maps" [attr.data-value]="map.mapFileName"><i class="map icon"></i>{{ map.name }}</div>
+        </div>
+      </div>
+    
+      <div class="ui divider"></div>
+    
+      <!-- Leaflet map container-->
+      <div class="map-container">
+        <div class="map-frame">
+          <div id="detailMap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Schließen
+    </div>
+    <div class="ui positive right labeled icon button">
+      Speichern
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>

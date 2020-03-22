@@ -51,6 +51,7 @@ export class EventComponent implements OnInit {
           if(res) {
             $(".ui.dimmer").removeClass("active");
             $("#" + eventId).remove();
+            setTimeout(() => { $(".dimmer.modals").remove(); }, 350);    
           }
         })
       }
