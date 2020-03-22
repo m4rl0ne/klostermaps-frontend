@@ -9,3 +9,9 @@
 .ui.secondary.inverted.pointing.menu .item {
     color: rgba(255,255,255,.7);
 }
+
+@media only screen and (max-width: 1800px) {
+    .ui.rail {
+        display: none;
+    }
+}

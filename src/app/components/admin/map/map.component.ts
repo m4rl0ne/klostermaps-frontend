@@ -24,7 +24,6 @@ export class MapComponent implements OnInit {
 
     this.mapService.getAllMaps().subscribe(maps => {
       this.maps = maps["maps"];
-      console.log(this.maps)
       this.numOfMaps = this.maps.length;
     });
   }
@@ -38,6 +37,7 @@ export class MapComponent implements OnInit {
           if(res) {
             $(".ui.dimmer").removeClass("active");
             $("#" + mapId).remove();
+            setTimeout(() => { $(".dimmer.modals").remove(); }, 350);    
 
             this.numOfMaps -= 1;
           }

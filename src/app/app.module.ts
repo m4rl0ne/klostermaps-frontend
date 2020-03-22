@@ -18,6 +18,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AuthGuardService } from './guards/auth-guard.service';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MainComponent } from './components/main/main.component';
+import { MapDetailModalComponent } from './components/admin/map/map-create-or-update/map-detail-modal/map-detail-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MainComponent } from './components/main/main.component';
     MapComponent,
     MapCreateOrUpdateComponent,
     AdminLoginComponent,
-    MainComponent
+    MainComponent,
+    MapDetailModalComponent
   ],
   imports: [
     SuiModule,
