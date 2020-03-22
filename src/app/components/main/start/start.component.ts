@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Router} from "@angular/router"
+import { Router } from "@angular/router"
 import { FormBuilder, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { StartService } from 'src/app/services/start.service';
 
@@ -14,16 +14,9 @@ export class StartComponent implements OnInit {
 
   @Output() gotDirections = new EventEmitter();
   startForm: any;
+  keywords = [];
 
-  keywords = [
-    { title: '205'},
-    { title: '311'},
-    { title: 'Biologie'},
-    { title: 'Aula'},
-    { title: 'Innenhof'},
-  ];
-
-  constructor(private router: Router, private fb: FormBuilder, private startService: StartService) { 
+  constructor(private router: Router, private fb: FormBuilder, private startService: StartService) {
     this.startForm = this.fb.group({
       start: ['Aula', Validators.required],
       end: ['', Validators.required]
@@ -31,13 +24,18 @@ export class StartComponent implements OnInit {
   }
 
   ngOnInit() {
-    $(".ui.search").search({
-      source: this.keywords,
-      onSelect: (e) => {
-        this.startForm.patchValue({
-          end: e.title
-        });
-      }
+    this.startService.getKeywords().subscribe(keys => {
+      keys.forEach(key => {
+        this.keywords.push({ title: key.key });
+      });
+      $(".ui.search").search({
+        source: this.keywords,
+        onSelect: (e) => {
+          this.startForm.patchValue({
+            end: e.title
+          });
+        }
+      });
     });
   }
 
