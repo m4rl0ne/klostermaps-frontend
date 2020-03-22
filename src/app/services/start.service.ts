@@ -14,4 +14,8 @@ export class StartService {
   getDirections(startFormValue): Observable<any> {
     return this.httpClient.post<any>(this.baseService.baseUrl + '/app/navigate/' + startFormValue.start + '/' + startFormValue.end, null);
   }
+
+  getKeywords(): Observable<any> {
+    return this.httpClient.get<any>(this.baseService.baseUrl + '/app/keywords');
+  }
 }
