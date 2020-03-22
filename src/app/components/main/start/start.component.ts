@@ -18,7 +18,7 @@ export class StartComponent implements OnInit {
 
   constructor(private router: Router, private fb: FormBuilder, private startService: StartService) {
     this.startForm = this.fb.group({
-      start: ['Aula', Validators.required],
+      start: ['', Validators.required],
       end: ['', Validators.required]
     });
   }
@@ -28,7 +28,17 @@ export class StartComponent implements OnInit {
       keys.forEach(key => {
         this.keywords.push({ title: key.key });
       });
-      $(".ui.search").search({
+
+      $(".ui.startSearch").search({
+        source: this.keywords,
+        onSelect: (e) => {
+          this.startForm.patchValue({
+            start: e.title
+          });
+        }
+      });
+
+      $(".ui.endSearch").search({
         source: this.keywords,
         onSelect: (e) => {
           this.startForm.patchValue({
@@ -36,6 +46,7 @@ export class StartComponent implements OnInit {
           });
         }
       });
+      
     });
   }
 

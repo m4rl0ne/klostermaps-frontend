@@ -51,7 +51,7 @@
   <h4 class="ui dividing header">Datei*</h4>
   <div class="field">
     <ngx-dropzone (change)="onSelect($event)">
-      <ngx-dropzone-label>Karte hochladen (.jpg, .png, .svg, .pdf)</ngx-dropzone-label>
+      <ngx-dropzone-label>Karte hochladen (.jpeg, .png)</ngx-dropzone-label>
       <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
           <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-preview>
