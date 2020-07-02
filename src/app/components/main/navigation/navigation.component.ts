@@ -101,7 +101,14 @@ export class NavigationComponent implements OnInit {
     });
 
     for(let marker of step.markers) {
-      new L.Marker([marker.lat, marker.lng], { title: marker.flag == "stairway" ? null : marker.flag }).setIcon(blueIcon).addTo(this.leafletMap);
+      new L.Marker([marker.lat, marker.lng], { title: marker.flag == "stairway" ? null : marker.flag })
+        .bindTooltip(marker.flag == "stairway" ? "Treppenhaus" : marker.flag, { 
+          permanent: true,
+          direction: 'right',
+          opacity: 1
+        })
+        .setIcon(blueIcon)
+        .addTo(this.leafletMap);
     }
   }
 
