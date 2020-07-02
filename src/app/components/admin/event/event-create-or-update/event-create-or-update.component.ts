@@ -128,9 +128,18 @@ export class EventCreateOrUpdateComponent implements OnInit {
             e.layer.setIcon(redIcon);
           }
 
-          // enable continue button
-          this.secondStepModel.keywords = JSON.stringify(this.keywords);
-          this.secondStepForm.controls["keywords"].markAsTouched();
+          this.keywords = this.keywords.filter(keyword => keyword.key != "");
+
+          if(this.keywords.filter(keyword => keyword.key != "").length > 0) {
+
+            // enable continue button
+            this.secondStepModel.keywords = JSON.stringify(this.keywords);
+            this.secondStepForm.controls["keywords"].markAsTouched();
+          }else {
+            this.secondStepModel.keywords = "";
+            this.secondStepForm.controls["keywords"].markAsUntouched();
+            this.secondStepForm.controls["keywords"].markAsPristine();
+          }
         });
       }
     });

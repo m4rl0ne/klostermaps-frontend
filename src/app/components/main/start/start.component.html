@@ -5,6 +5,13 @@
 
     <hr>
 
+    <div class="ui negative message" *ngIf="error">
+      <div class="header">
+        Ein Fehler ist aufgetreten
+      </div>
+      <p>Es tut uns leid, aber es ist ein Fehler aufgetreten. Bitte probieren Sie es erneut.</p>
+    </div>
+
     <form class="ui form" [formGroup]="startForm" (submit)="startNavigation()">
       <div class="field">
         <div class="ui search startSearch">

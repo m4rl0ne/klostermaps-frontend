@@ -15,6 +15,7 @@ export class StartComponent implements OnInit {
   @Output() gotDirections = new EventEmitter();
   startForm: any;
   keywords = [];
+  error: boolean = false;
 
   constructor(private router: Router, private fb: FormBuilder, private startService: StartService) {
     this.startForm = this.fb.group({
@@ -52,9 +53,14 @@ export class StartComponent implements OnInit {
 
   startNavigation(): void {
     $(".ui.dimmer").addClass("active");
+    let that = this;
     this.startService.getDirections(this.startForm.value).subscribe(directions => {
       $(".ui.dimmer").removeClass("active");
+      this.error = false;
       this.gotDirections.emit(directions);
+    }, error => {
+      $(".ui.dimmer").removeClass("active");
+      this.error = true;
     })
   }
 
