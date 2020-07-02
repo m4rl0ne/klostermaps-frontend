@@ -26,6 +26,7 @@
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
+    "leaflet-polylinedecorator": "^1.6.0",
     "ng2-semantic-ui": "^0.9.7",
     "ngx-dropzone": "^2.2.2",
     "rxjs": "6.0.0",

@@ -79,13 +79,22 @@ export class NavigationComponent implements OnInit {
     }
 
     let polylineToAdd = new L.Polyline(polylinePoints, {
-      color: 'red',
+      color: 'blue',
       weight: 3,
       opacity: 0.5,
       smoothFactor: 1
     });
 
     polylineToAdd.addTo(this.leafletMap);
+
+    /**
+     * Polyline decorator (arrows)
+     */
+    let arrowHead = L.polylineDecorator(polylineToAdd, {
+      patterns: [
+        { offset: 25, repeat: 100, symbol: L.Symbol.arrowHead({pixelSize: 15, polygon: false, pathOptions: {stroke: true }}) }
+      ]
+    }).addTo(this.leafletMap);
 
     /**
      * Add Markers (start/goal)
