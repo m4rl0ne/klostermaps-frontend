@@ -185,8 +185,8 @@ export class MapCreateOrUpdateComponent implements OnInit {
                 that.showMapDetailModal = true;
 
                 that.originMarker = that.markers[markerId];
-                that.mapDetailTitle = "Ausgang des Treppenhauses wählen";
-                that.mapDetailHeader = "Bitte wählen Sie eine Karte und dann den Ausgang des Treppenhauses an.";
+                that.mapDetailTitle = "Ebenen verbinden";
+                that.mapDetailHeader = "Bitte wählen Sie eine Karte und dann den Ausgang des Treppenhauses an, der die beiden Ebenen verbindet.";
               }
             });
           }
