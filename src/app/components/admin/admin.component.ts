@@ -21,6 +21,8 @@ export class AdminComponent implements OnInit {
 
     this.eventService.getActiveEvent().subscribe(event => {
       this.activeEvent = event["event"][0];
+
+      console.log(this.activeEvent)
     })
   }
 

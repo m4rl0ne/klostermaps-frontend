@@ -84,6 +84,7 @@ export class EventCreateOrUpdateComponent implements OnInit {
         //add all markers
         let map = this.maps.find(x => x.mapFileName == mapFileName);
         let markerArray = [];
+        
         for(let marker of map.markers) {
           let popup = L.popup({className: 'large-popup', width: '500px'});
           popup.setContent('<div class="container"><div class="ui form"><div class="field"><label>Name</label><div class="ui input"><input type="text" placeholder="Name" id="key-' + marker.id + '"></div></div></div></div>');

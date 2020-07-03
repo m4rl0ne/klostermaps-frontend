@@ -11,18 +11,22 @@
   </div>
 </div>
 
-<table class="ui celled map table" *ngIf="maps != null && numOfMaps > 0">
+<table class="ui celled definition map table" *ngIf="maps != null && numOfMaps > 0">
   <thead>
     <tr>
+      <th></th>
       <th>Name</th>
+      <th>Beschreibung</th>
       <th>Dateiname</th>
-      <th>Markierungen anzeigen</th>
+      <th>Markierungen</th>
       <th class="collapsing">Aktion</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let map of maps" [attr.id]="map?._id">
+      <td><div class="ui fitted checkbox"><input type="checkbox"> <label></label></div></td>
       <td data-label="Name">{{ map?.name }}</td>
+      <td data-label="Beschreibung">{{ map?.description == '' ? 'Keine Beschreibung' : map?.description }}</td>
       <td data-label="Bild">{{ map?.mapFileName }}&nbsp;&nbsp;<a href="{{ baseUrl + '/maps/' + map.mapFileName }}" target="_blank"><i class="external alternate yellow icon"></i></a></td>
       <td data-label="Anzeigen" (click)="showComingSoonModal()"><a>Anzeigen&nbsp;&nbsp;<i class="external alternate yellow icon"></i></a></td>
       <td class="single line"><i class="copy green outline icon" (click)="showComingSoonModal()"></i><i class="edit outline blue icon" (click)="showComingSoonModal()"></i><i class="trash alternate outline red icon" (click)="showDeleteConfirmationModal(map._id)" data-id="{{ map._id }}"></i></td>
@@ -30,7 +34,7 @@
   </tbody>
   <tfoot class="full-width">
     <tr>
-      <th colspan="4">
+      <th colspan="6">
         <button class="ui right floated small primary labeled icon button" routerLink="/admin/map/createOrEdit">
           <i class="plus icon"></i> Karte hochladen
         </button>

@@ -27,24 +27,23 @@ export class MapDetailModalComponent implements OnInit {
   mapInit: boolean = false;
   currentOverlay: any;
 
-  selectedMarker: any = {};
+  selectedMarkerArray = [];
 
   constructor(private baseService: BaseService) { }
 
   ngOnInit() {
-    console.log(this.maps);
     this.maps = this.maps.maps;
 
     let that = this;
     $(".ui.mapDetailModal").modal({
       onHide: () => {
-        if(!that.selectedMarker || !that.selectedMarker.direction || that.selectedMarker.direction == null) {
+        if(!that.selectedMarkerArray ||that.selectedMarkerArray.length == 0) {
           that.closed.emit(true);
         }
       },
 
       onApprove: () => {
-        that.closed.emit(that.selectedMarker);
+        that.closed.emit(that.selectedMarkerArray);
       }
     }).modal("show");
 
@@ -101,50 +100,31 @@ export class MapDetailModalComponent implements OnInit {
           let lMarker = new L.marker([marker.position.lat,marker.position.lng]);
           lMarker.id = marker.id;
 
-          lMarker.setIcon(blueIcon);
+          if(that.selectedMarkerArray.filter(m => m.target.id == lMarker.id).length > 0) {
+            lMarker.setIcon(greenIcon);
+          }else {
+            lMarker.setIcon(blueIcon);
+          }
+
           lMarker.on("click", (e) => {  
 
-            //loop through all other markers to unselect them
-            this.leafletMap.eachLayer(layer => {
-                if(layer instanceof L.Marker && that.leafletMap.getBounds().contains(layer.getLatLng())) {
-                  layer.setIcon(blueIcon);
-                }
+            console.log("Marker Array:");
+            console.log(markerArray);
+
+            if(that.selectedMarkerArray.length == 2) {
+              that.selectedMarkerArray.shift();
+            }
+
+            that.selectedMarkerArray.push({
+              origin: that.origin,
+              target: lMarker,
+              targetMapId: map._id
             });
 
-            that.selectedMarker.origin = that.origin;
-            that.selectedMarker.target = lMarker;
-            that.selectedMarker.targetMapId = map._id;
-            that.selectedMarker.direction = "up";
+            console.log("Selected Marker Array: ");
+            console.log(that.selectedMarkerArray);
 
             lMarker.setIcon(greenIcon);
-            let popup = L.popup({className: 'large-popup', width: '500px'});
-            popup.setContent('<div class="ui form"> <div class="grouped fields detailFields"><label>Wie kommt man von "' + map.name + '" nach "' + that.mapToCreateName + '"?</label>'+
-            '<div class="field"><div class="ui radio checkbox" data-direction="up"><input type="radio" name="direction" checked="checked"><label>Nach oben gehen</label></div></div>'+
-            '<div class="field"><div class="ui radio checkbox" data-direction="down"><input type="radio" name="direction"><label>Nach unten gehen</label></div></div></div></div>');
-
-            lMarker.on("popupopen", (e) => {
-              if(that.selectedMarker && that.selectedMarker.direction != null) {
-                if(that.selectedMarker.direction == "up") {
-                  $(".detailFields .radio.checkbox:eq(0)").checkbox("check");
-      
-                }else{
-                  $(".detailFields .radio.checkbox:eq(1)").checkbox("check");
-                }
-              }else {
-                $(".detailFields .radio.checkbox:eq(0)").checkbox("check");
-                that.selectedMarker.direction = "up";
-              }
-      
-              //add change handler for checkbox
-              $(".detailFields .radio.checkbox").checkbox({
-                onChecked: (e) => {
-                  that.selectedMarker.direction = $(".grouped.fields.detailFields .checked")[0].dataset.direction;
-                }
-              });
-            });
-
-            lMarker.bindPopup(popup);
-
           });
 
           markerArray.push(lMarker);

@@ -51,8 +51,8 @@
           <div class="ui divider"></div>
     
           <div class="ui bulleted list">
-            <div class="item">Aktives Event: <b>{{ activeEvent?.name }}</b></div>
-            <div class="item">Geladene Karten: <b>Erdgeschoss, 100er, 200er, 300er</b></div>
+            <div class="item">Aktives Event: <b>{{ activeEvent?.name || "Kein Event aktiv" }}</b></div>
+            <div class="item">Geladene Karten: <b>{{ activeEvent != null ? "Erdgeschoss, 200er, 300er" : "Keine Karten aktiv" }}</b></div>
           </div>
         </div>
       </div>

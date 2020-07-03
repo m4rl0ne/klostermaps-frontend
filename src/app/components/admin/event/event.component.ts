@@ -11,12 +11,14 @@ declare var $: any;
 export class EventComponent implements OnInit {
 
   events: any;
+  numOfEvents=0;
 
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
     this.eventService.getEvents().subscribe(events => {
       this.events = events["events"];
+      this.numOfEvents = this.events.length;
 
       let that = this;
       setTimeout(() => {
@@ -51,7 +53,8 @@ export class EventComponent implements OnInit {
           if(res) {
             $(".ui.dimmer").removeClass("active");
             $("#" + eventId).remove();
-            setTimeout(() => { $(".dimmer.modals").remove(); }, 350);    
+
+            this.numOfEvents -= 1;
           }
         })
       }

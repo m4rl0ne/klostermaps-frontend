@@ -1,6 +1,6 @@
 <h2 class="ui dividing header">Events: Übersicht</h2>
 
-<div class="ui placeholder segment" *ngIf="events && events.length == 0">
+<div class="ui placeholder segment" *ngIf="(events && events.length == 0) || numOfEvents == 0">
   <div class="ui icon header">
     <i class="search icon"></i>
     Es wurden noch keine Events angelegt
@@ -10,23 +10,27 @@
   </div>
 </div>
 
-<table class="ui celled definition table" *ngIf="events && events.length != 0">
+<table class="ui celled definition table" *ngIf="events && numOfEvents > 0">
   <thead>
-    <th></th>
-    <th>Name</th>
+    <th class="collapsing"></th>
     <th>Aktiv</th>
+    <th>Name</th>
     <th class="collapsing">Aktion</th>
   </thead>
 
   <tbody>
     <tr *ngFor="let event of events" [attr.id]="event._id">
       <td class="collapsing">
+        <div class="ui fitted checkbox">
+          <input type="checkbox"> <label></label>
+        </div>
+      </td>
+      <td class="collapsing">
         <div class="ui fitted slider checkbox" [attr.data-eventId]="event._id">
           <input type="checkbox" [checked]="event.active" [attr.data-eventId]="event._id"> <label></label>
         </div>
       </td>
       <td>{{ event.name }}</td>
-      <td class="eventActive">{{ event.active == true ? "Ja" : "Nein"}}</td>
       <td class="single line"><i class="copy green outline icon" (click)="showComingSoonModal()"></i><i class="edit outline blue icon" (click)="showComingSoonModal()"></i><i class="trash alternate outline red icon" (click)="showDeleteConfirmationModal(event._id)" data-id="{{ event._id }}"></i></td>
     </tr>
   </tbody>

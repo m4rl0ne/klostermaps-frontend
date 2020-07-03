@@ -36,6 +36,15 @@ export class StartComponent implements OnInit {
           this.startForm.patchValue({
             start: e.title
           });
+        },
+        templates: {
+          message: (message, type) => {
+            if(type == "empty") {
+              return "<div class='message empty'><div class='header'>Keine Ergebnisse</div><div class='description'>Keine Suchergebnisse gefunden</div></div>";
+            }else {
+              return "<div class='message'>" + message + "</div>";
+            }
+          }
         }
       });
 
@@ -45,6 +54,15 @@ export class StartComponent implements OnInit {
           this.startForm.patchValue({
             end: e.title
           });
+        },
+        templates: {
+          message: (message, type) => {
+            if(type == "empty") {
+              return "<div class='message empty'><div class='header'>Keine Ergebnisse</div><div class='description'>Keine Suchergebnisse gefunden</div></div>";
+            }else {
+              return "<div class='message'>" + message + "</div>";
+            }
+          }
         }
       });
       

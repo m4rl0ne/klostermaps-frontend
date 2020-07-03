@@ -172,8 +172,18 @@ export class MapCreateOrUpdateComponent implements OnInit {
               that.markers[markerId].roomType = $(".grouped.fields.typeFields .checked")[0].dataset.roomtype;
               if(that.markers[markerId].roomType == "stairway" && that.maps.maps.length > 0) {
                 $(".selectExitBtn").show();
+                let redIcon = new L.Icon({
+                  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                  popupAnchor: [1, -34],
+                  shadowSize: [41, 41]
+                });
+                layer.setIcon(redIcon);
               }else {
                 $(".selectExitBtn").hide();
+                layer.setIcon(blueIcon);
               }
             }
           });
@@ -181,7 +191,7 @@ export class MapCreateOrUpdateComponent implements OnInit {
           if(that.maps.maps.length > 0) {
             $(".selectExitBtn").click(() => {
               if(that.markers[markerId].roomType == "stairway") {
-                that.markers[markerId].stairwayDetails = { exitId: null, direction: null, targetMapId: null };
+                that.markers[markerId].stairwayDetails = { exitId: [], direction: null, targetMapId: [] };
                 that.showMapDetailModal = true;
 
                 that.originMarker = that.markers[markerId];
@@ -210,34 +220,11 @@ export class MapCreateOrUpdateComponent implements OnInit {
     });
   }
 
-  mapDetailClose(event) {
+  mapDetailClose(modalData) {
     this.showMapDetailModal = false;
 
-    console.log("Event:");
-    console.log(event);
+    if(modalData.length != 0) {
 
-    if((typeof event == "boolean" && event == false) || (!event.targetMapId || !event.direction || !event.target.id)) {
-      let redIcon = new L.Icon({
-        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      });
-
-      // check if stairway markers have no exit id assigned which is neccessary to proceeds
-      this.markers.forEach(marker => {
-        this.map.eachLayer(layer => {
-          if((layer._leaflet_id == marker.id && marker.stairwayDetails.exitId === null) || (layer._leaflet_id == marker.id && (!event.targetMapId || !event.direction || !event.target.id))) {
-            layer.setIcon(redIcon);
-
-            //disable form!
-          }
-        })
-      });
-
-    } else {
       let greenIcon = new L.Icon({
         iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -248,21 +235,24 @@ export class MapCreateOrUpdateComponent implements OnInit {
       });
 
       this.markers.forEach(marker => {
-        if(marker && event.origin && marker.id == event.origin.id) {
-          marker.stairwayDetails.targetMapId = event.targetMapId;
-          marker.stairwayDetails.direction = event.direction;
-          marker.stairwayDetails.exitId = event.target.id;
+        modalData.forEach(selectedMarker => {
+          if(marker && selectedMarker.origin && marker.id == selectedMarker.origin.id) {
+            marker.stairwayDetails.targetMapId.push(selectedMarker.targetMapId);
+            marker.stairwayDetails.direction = selectedMarker.direction;
+            marker.stairwayDetails.exitId.push(selectedMarker.target.id);
+              
+            this.map.eachLayer(layer => {
+              if(layer._leaflet_id == marker.id) {
+                layer.setIcon(greenIcon);
+              }
+            });
+          }
+        });
+        
+      });
 
-          this.map.eachLayer(layer => {
-            if(layer._leaflet_id == marker.id && marker.stairwayDetails.exitId !== null) {
-              layer.setIcon(greenIcon);
-            }
-          });
-        }
-      })
+      console.log(this.markers);
     }
-
-    console.log(this.markers);
   }
 
   nextStep() {
