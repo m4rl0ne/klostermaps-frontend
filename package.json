@@ -22,7 +22,7 @@
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
     "countup.js": "^2.0.4",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
